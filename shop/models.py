@@ -8,7 +8,7 @@ User = get_user_model()
 
 # 1.Category
 # 2.Product
-# 3.CartProduct #  продукт в корзина
+# 3.CartProduct #  продукт в корзине
 # 4.Cart корзина
 # 5.Customer
 
