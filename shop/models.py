@@ -25,7 +25,7 @@ class Category(models.Model):
 class Product(models.Model):
 
     class Meta:
-        abstract = True  # Невозможно создать миграцию, необходим класс-потомком, служит шаблоном/каркасом
+        abstract = True  # Невозможно создать миграцию, необходим класс-потомок служит шаблоном/каркасом
 
     title = models.CharField(max_length=255, verbose_name='Наименование')
     slug = models.SlugField(unique=True)
@@ -61,12 +61,12 @@ class CartProduct(models.Model):  # Продукты в корзине
     cart = models.ForeignKey('Cart', verbose_name='Корзина', on_delete=models.CASCADE, related_name='related_products')
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
-    content_object = GenericForeignKey('content_type', 'object_id') # Contentype видит все модели,
+    content_object = GenericForeignKey('content_type', 'object_id')  # Contentype видит все модели,
     qty = models.PositiveIntegerField(default=1)
     final_price = models.DecimalField(max_digits=9, decimal_places=2, verbose_name='Общая цена')
 
     def __str__(self):
-        return f'Продукт {self.content_type.title} для корзины'
+        return f'Продукт {self.content_object} в корзине'
 
 # p = NotebookProduct.objects.get(pk=1)
 # cp = CartProduct.objects.create(content_object=p) pk пойдет в object_id
@@ -80,7 +80,7 @@ class Cart(models.Model):
     final_price = models.DecimalField(max_digits=9, decimal_places=2, verbose_name='Общая цена')
 
     def __str__(self):
-        return self.id
+        return f'{self.id}'
 
 
 class Customer(models.Model):
@@ -89,5 +89,5 @@ class Customer(models.Model):
     phone = models.CharField(max_length=20, verbose_name='Телефон')
 
     def __str__(self):
-        return f'Покупатель {self.user.username}{self.user.last_name}'
+        return f'Покупатель {self.user.username}'
 
